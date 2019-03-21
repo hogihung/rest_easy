@@ -1,0 +1,39 @@
+{
+    "targets": [
+      {
+        "url": "http://some-url.com:7778/api/v1/version",
+        "auth": "basic",
+        "user": "anon-user",
+        "pass": "some-pass",
+        "label": "app-01",
+        "group": "core"
+      },
+      {
+        "url": "http://some-url.com:7780/api/v2/version",
+        "auth": "none",
+        "label": "app-02",
+        "group": "core"
+      },
+      {
+        "url": "http://some-url.com:7777/api/v3/status",
+        "auth": "token",
+        "token": "some-super-long-token-here",
+        "label": "app-04",
+        "group": "base"
+      },
+      {
+        "url": "http://some-url.com:7778/api/v1/db-ver"
+      },
+      {
+        "url": "http://some-url.com:7778/api/v1/version",
+        "auth": "basic",
+        "user": "anon-user",
+        "pass": "some-pass"
+      },
+      {
+        "url": "http://some-url.com:7778/api/v1/version",
+        "auth": "token",
+        "token": "some-super-long-token-here"
+      }
+    ]
+}
