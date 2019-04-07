@@ -133,11 +133,6 @@ type URLTarget struct {
 }
 
 func initLogging() bool {
-	// Formatter = &Logr.JSONFormatter
-	// Formatter.TimestampFormat = "02-01-2006 15:04:05"
-	// Formatter.FullTimestamp = true
-	// Logr.SetFormatter(Formatter)
-
 	Logr.SetFormatter(&Logr.JSONFormatter{})
 
 	logFileFH, err := os.OpenFile(logFile, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0644)
