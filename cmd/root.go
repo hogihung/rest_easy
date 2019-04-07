@@ -37,10 +37,6 @@ var targetsFile string
 var logFile string
 var executablePath string
 
-// NOTE: may need to refactor to pull code/checks for the targets JSON file into
-//       the files files test.go and list.go.  The adhoc subcommand does not need
-//       the targets JSON file.  Only the test and list subcommands need it.
-
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "rest_easy",
