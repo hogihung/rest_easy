@@ -136,9 +136,6 @@ func initLogging() bool {
 	Logr.SetFormatter(&Logr.JSONFormatter{})
 
 	logFileFH, err := os.OpenFile(logFile, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0644)
-	// NOTE: since other components/sub-commands will be using the logger, we can't
-	//       close the file.  How should we handle the file close / defer close ?
-	//defer logFileFH.Close()
 
 	if err != nil {
 		// Cannot open log file. Logging to stderr
