@@ -26,6 +26,7 @@ import (
 	"io/ioutil"
 	"os"
 
+	Logr "github.com/Sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
 
@@ -40,7 +41,8 @@ in the JSON file.
 With the 'list' sub-command one can see the all (default) the endpoints to test,
 a group of endpoints to test, or a selection of endpoints to test.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("---- list called ----")
+		//fmt.Println("---- list called ----")
+		Logr.Info("-- List sub-command called")
 
 		all := cmd.Flag("all").Value.String()
 		if all == "true" {

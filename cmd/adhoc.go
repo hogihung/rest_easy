@@ -23,6 +23,7 @@ package cmd
 import (
 	"fmt"
 
+	Logr "github.com/Sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
 
@@ -36,7 +37,8 @@ and arguments one can execute a REST GET request againt the target endpoint.
 The 'adhoc' command takes a required flag and argument for endpoint along with
 optional flags/arguments for authentication.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("adhoc called")
+		//fmt.Println("adhoc called")
+		Logr.Info("-- Adhoc sub-command called")
 
 		endpoint := cmd.Flag("endpoint").Value.String()
 		fmt.Println("Endpoint: ", endpoint)

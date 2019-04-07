@@ -28,6 +28,7 @@ import (
 	"os"
 	"path/filepath"
 
+	Logr "github.com/Sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
 
@@ -35,6 +36,8 @@ var filterBy string
 var targetsFile string
 var logFile string
 var executablePath string
+
+//var Logr = logrus.New()
 
 // NOTE: may need to refactor to pull code/checks for the targets JSON file into
 //       the files files test.go and list.go.  The adhoc subcommand does not need
@@ -108,6 +111,7 @@ func initSetup() {
 		if err != nil {
 			fmt.Println("WARNING: File is NOT writable.  Operation will continue but no log will be written.")
 		}
+		initLogging()
 	} else {
 		fmt.Println("WARNING:  Log file does not exist. Operation will continue, but no log will be written.")
 	}
@@ -132,4 +136,32 @@ type URLTarget struct {
 		Group string `json:"group,omitempty"`
 		Token string `json:"token,omitempty"`
 	} `json:"targets"`
+}
+
+func initLogging() bool {
+	// Formatter = &Logr.JSONFormatter
+	// Formatter.TimestampFormat = "02-01-2006 15:04:05"
+	// Formatter.FullTimestamp = true
+	// Logr.SetFormatter(Formatter)
+
+	Logr.SetFormatter(&Logr.JSONFormatter{})
+
+	logFileFH, err := os.OpenFile(logFile, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0644)
+	// NOTE: since other components/sub-commands will be using the logger, we can
+	//       close the file.  How should we handle the file close / defer close ?
+	//defer logFileFH.Close()
+
+	if err != nil {
+		// Cannot open log file. Logging to stderr
+		fmt.Println(err)
+		return false
+	} else {
+		Logr.SetOutput(logFileFH)
+	}
+	Logr.Info("Begin logging events.")
+	// Logr.Warning("This is a warning")
+	// Logr.Error("A non fatal error. Won't stop execution")
+	// Logr.Fatal("Fatal error, execution will be halted")
+	// Logr.Panic("Panic, worse than fatal, dumps stack trace")
+	return true
 }

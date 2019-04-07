@@ -23,6 +23,7 @@ package cmd
 import (
 	"fmt"
 
+	Logr "github.com/Sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
 
@@ -38,7 +39,8 @@ With the 'test' sub-command one can run tests against all (default)
 endpoints, against a group of endpoints, or against a selection of
 defined endpoints.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("---- test called ----")
+		//fmt.Println("---- test called ----")
+		Logr.Info("-- Test sub-command called")
 
 		all := cmd.Flag("all").Value.String()
 		if all == "true" {
