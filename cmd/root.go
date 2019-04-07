@@ -42,9 +42,9 @@ var executablePath string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "cobra_kai",
+	Use:   "rest_easy",
 	Short: "Command line utility for running REST GET requests against target endpoints",
-	Long: `Cobra Kai is a command line utility, which takes a JSON formatted configuration
+	Long: `REST Easy is a command line utility, which takes a JSON formatted configuration
 file and performs REST GET requests against the defined target endpoints. 
 
 Using this app, with JSON formatted config file, one can run n number of GET requests to the
