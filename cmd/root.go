@@ -133,6 +133,9 @@ type URLTarget struct {
 }
 
 func initLogging() bool {
+	//Logr.SetLevel(Logr.WarnLevel) // want to be able to toggle InfoLevel
+	Logr.SetLevel(Logr.InfoLevel)
+
 	Logr.SetFormatter(&Logr.JSONFormatter{})
 
 	logFileFH, err := os.OpenFile(logFile, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0644)
