@@ -49,7 +49,7 @@ a group of endpoints to test, or a selection of endpoints to test.`,
 			fmt.Println("Filter set to: ", filterBy)
 			// This should print all of our records extracted from targets.json
 			// See the print example below.
-			display(all)
+			display(filterBy, all)
 			return
 		}
 
@@ -61,6 +61,7 @@ a group of endpoints to test, or a selection of endpoints to test.`,
 			// Here we should only print records extracted from targets.json
 			// that contain a value for group that matches what was supplied
 			// via the command line.
+			display(filterBy, group)
 			return
 		}
 
@@ -72,6 +73,7 @@ a group of endpoints to test, or a selection of endpoints to test.`,
 			// Here we should only print records extracted from targets.json
 			// that contain a value(s) for label that matches what was supplied
 			// for selection via the command line.  Can be one or more values.
+			display(filterBy, selection)
 			return
 		}
 	},
@@ -86,8 +88,10 @@ func init() {
 	listCmd.PersistentFlags().StringVar(&targetsFile, "targets", "", "JSON formatted targets file (default is ./targets.json)")
 }
 
-func display(filter string) {
-	if filter == "true" {
+func display(filter string, value string) {
+	if filter == "all" {
+		Logr.Info("Value of all is: ", value)
+
 		fmt.Println("Preparing to parse JSON for file: ", targetsFile)
 		jsonFile, err := os.Open(targetsFile)
 		if err != nil {
@@ -120,5 +124,11 @@ func display(filter string) {
 			//
 			// https://gobyexample.com/switch
 		}
+	}
+	if filter == "group" {
+		Logr.Info("Value of group is: ", value)
+	}
+	if filter == "selection" {
+		Logr.Info("Value of selection is: ", value)
 	}
 }
