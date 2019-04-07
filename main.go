@@ -21,27 +21,9 @@
 package main
 
 import (
-	"github.com/hogihung/cobra_kai/cmd"
-	log "github.com/sirupsen/logrus"
+	"github.com/hogihung/rest_easy/cmd"
 )
 
 func main() {
 	cmd.Execute()
-	initLogging()
-}
-
-func initLogging() {
-	log.SetFormatter(&log.JSONFormatter{})
-
-	log.WithFields(log.Fields{
-		"file": "/var/logs/cobra_kai.log",
-	}).Info("Preparing to spin things up")
-
-	log.WithFields(log.Fields{
-		"bobot": "nurny",
-	}).Warn("An invasion commences")
-
-	log.WithFields(log.Fields{
-		"puppy": "dannyy",
-	}).Fatal("Odo is coming for you")
 }
