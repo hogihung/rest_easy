@@ -1,5 +1,5 @@
 {
-    "targets": [
+    "url_targets": [
       {
         "url": "http://some-url.com:7778/api/v1/version",
         "auth": "basic",
