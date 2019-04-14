@@ -119,9 +119,9 @@ func fileExists(filename string) bool {
 	return !info.IsDir()
 }
 
-// URLTarget - Struct to map data from targetsFile
-type URLTarget struct {
-	Targets []struct {
+// URLTargets - Struct to map data from targetsFile
+type URLTargets struct {
+	Target []struct {
 		URL   string `json:"url"`
 		Auth  string `json:"auth,omitempty"`
 		User  string `json:"user,omitempty"`
@@ -129,7 +129,7 @@ type URLTarget struct {
 		Label string `json:"label,omitempty"`
 		Group string `json:"group,omitempty"`
 		Token string `json:"token,omitempty"`
-	} `json:"targets"`
+	} `json:"url_targets"`
 }
 
 func initLogging() bool {
