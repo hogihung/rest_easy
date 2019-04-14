@@ -89,46 +89,58 @@ func init() {
 }
 
 func display(filter string, value string) {
+
+	fmt.Println("Preparing to parse JSON for file: ", targetsFile)
+	jsonFile, err := os.Open(targetsFile)
+	if err != nil {
+		fmt.Println(err) // change this to log.Fatal or panic
+	}
+	defer jsonFile.Close()
+
+	jsonValue, err := ioutil.ReadAll(jsonFile)
+	if err != nil {
+		fmt.Println(err) // change this to log.Fatal or panic
+	}
+
+	fmt.Println("-----------------------------------")
+	targets := URLTargets{}
+	_ = json.Unmarshal([]byte(jsonValue), &targets)
+
 	if filter == "all" {
 		Logr.Info("Value of all is: ", value)
-
-		fmt.Println("Preparing to parse JSON for file: ", targetsFile)
-		jsonFile, err := os.Open(targetsFile)
-		if err != nil {
-			fmt.Println(err) // change this to log.Fatal or panic
-		}
-		defer jsonFile.Close()
-
-		jsonValue, err := ioutil.ReadAll(jsonFile)
-		if err != nil {
-			fmt.Println(err) // change this to log.Fatal or panic
-		}
-
-		fmt.Println("-----------------------------------")
-		targets := URLTargets{}
-		_ = json.Unmarshal([]byte(jsonValue), &targets)
-
-		for i := 0; i < len(targets.Target); i++ {
-			fmt.Println("URL: " + targets.Target[i].URL)
-			fmt.Println("Auth: " + targets.Target[i].Auth)
-			fmt.Println("User: " + targets.Target[i].User)
-			fmt.Println("Pass: " + targets.Target[i].Pass)
-			fmt.Println("Label: " + targets.Target[i].Label)
-			fmt.Println("Group: " + targets.Target[i].Group)
-			fmt.Println("Token: " + targets.Target[i].Token)
-			fmt.Println("-------------------------------------------")
-
-			// NOTE: above we are just getting the feel of things and how to
-			//       dissect our JSON data.  Eventually we will remove the
-			//       Printlns and replace with the appropriate function.
-			//
-			// https://gobyexample.com/switch
-		}
+		printOutput(targets)
 	}
+
 	if filter == "group" {
 		Logr.Info("Value of group is: ", value)
+
+		// Filter &targets to include only what we want
+		// TODO ...
+		printOutput(targets)
 	}
+
 	if filter == "selection" {
-		Logr.Info("Value of selection is: ", value)
+		Logr.Info("Value of selection (labels) is: ", value)
+		
+		// Filter &targets to include only what we want
+		// TODO ...
+		printOutput(targets)
+	}
+}
+
+func filterJSON(filter string, targets URLTargets) {
+	fmt.Println("filterJSON was called for: ", targets)
+}
+
+func printOutput(targets URLTargets) {
+	for i := 0; i < len(targets.Target); i++ {
+		fmt.Println("URL: " + targets.Target[i].URL)
+		fmt.Println("Auth: " + targets.Target[i].Auth)
+		fmt.Println("User: " + targets.Target[i].User)
+		fmt.Println("Pass: " + targets.Target[i].Pass)
+		fmt.Println("Label: " + targets.Target[i].Label)
+		fmt.Println("Group: " + targets.Target[i].Group)
+		fmt.Println("Token: " + targets.Target[i].Token)
+		fmt.Println("-------------------------------------------")
 	}
 }
