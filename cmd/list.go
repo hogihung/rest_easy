@@ -105,17 +105,17 @@ func display(filter string, value string) {
 		}
 
 		fmt.Println("-----------------------------------")
-		targets := URLTarget{}
+		targets := URLTargets{}
 		_ = json.Unmarshal([]byte(jsonValue), &targets)
 
-		for i := 0; i < len(targets.Targets); i++ {
-			fmt.Println("URL: " + targets.Targets[i].URL)
-			fmt.Println("Auth: " + targets.Targets[i].Auth)
-			fmt.Println("User: " + targets.Targets[i].User)
-			fmt.Println("Pass: " + targets.Targets[i].Pass)
-			fmt.Println("Label: " + targets.Targets[i].Label)
-			fmt.Println("Group: " + targets.Targets[i].Group)
-			fmt.Println("Token: " + targets.Targets[i].Token)
+		for i := 0; i < len(targets.Target); i++ {
+			fmt.Println("URL: " + targets.Target[i].URL)
+			fmt.Println("Auth: " + targets.Target[i].Auth)
+			fmt.Println("User: " + targets.Target[i].User)
+			fmt.Println("Pass: " + targets.Target[i].Pass)
+			fmt.Println("Label: " + targets.Target[i].Label)
+			fmt.Println("Group: " + targets.Target[i].Group)
+			fmt.Println("Token: " + targets.Target[i].Token)
 			fmt.Println("-------------------------------------------")
 
 			// NOTE: above we are just getting the feel of things and how to
