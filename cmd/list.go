@@ -25,6 +25,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	s "strings"
 
 	Logr "github.com/Sirupsen/logrus"
 	"github.com/spf13/cobra"
@@ -84,7 +85,8 @@ func init() {
 
 func display(filter string, value string) {
 
-	fmt.Println("Preparing to parse JSON for file: ", targetsFile)
+	//fmt.Println("Preparing to parse JSON for file: ", targetsFile)
+	Logr.Info("Preparing to parse JSON from file: ", targetsFile)
 	jsonFile, err := os.Open(targetsFile)
 	if err != nil {
 		fmt.Println(err) // change this to log.Fatal or panic
@@ -120,10 +122,16 @@ func display(filter string, value string) {
 	if filter == "selection" {
 		Logr.Info("Value of selection (labels) is: ", value)
 
+		//fmt.Println("What is our selection? ", value)
+		splitSelection := s.Split(value, " ")
+		//fmt.Println("What is our split selection? ", splitSelection)
+		//fmt.Printf("What type is splitSelection? %T\n", splitSelection)
+		
 		// Filter to include only what we want for 'Selection (Labels)'
 		for _, target := range targets.Target {
 			// NOTE: For label we need to handle one or more strings as filters
-			if target.Label == value {
+			if HasElem(splitSelection, target.Label) {
+			//if target.Label == value {
 				filteredTargets.Target = append(filteredTargets.Target, target)
 			}
 		}
