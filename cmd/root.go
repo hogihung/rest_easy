@@ -36,6 +36,7 @@ var filterBy string
 var targetsFile string
 var logFile string
 var executablePath string
+var filteredTargets URLTargets
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{

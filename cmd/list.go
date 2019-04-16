@@ -30,8 +30,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var filteredTargets URLTargets
-
 // listCmd represents the list command
 var listCmd = &cobra.Command{
 	Use:   "list",
@@ -48,9 +46,7 @@ a group of endpoints to test, or a selection of endpoints to test.`,
 		all := cmd.Flag("all").Value.String()
 		if all == "true" {
 			filterBy = "all"
-			//fmt.Println("Filter set to: ", filterBy)
 			// This should print all of our records extracted from targets.json
-			// See the print example below.
 			display(filterBy, all)
 			return
 		}
@@ -58,8 +54,6 @@ a group of endpoints to test, or a selection of endpoints to test.`,
 		group := cmd.Flag("group").Value.String()
 		if group != "" {
 			filterBy = "group"
-			//fmt.Println("Filter set to: ", filterBy)
-			//fmt.Println("With a group value of: ", group)
 			// Here we should only print records extracted from targets.json
 			// that contain a value for group that matches what was supplied
 			// via the command line.
@@ -70,8 +64,6 @@ a group of endpoints to test, or a selection of endpoints to test.`,
 		selection := cmd.Flag("selection").Value.String()
 		if selection != "" {
 			filterBy = "selection"
-			//fmt.Println("Filter set to: ", filterBy)
-			//fmt.Println("With a selection of: ", selection)
 			// Here we should only print records extracted from targets.json
 			// that contain a value(s) for label that matches what was supplied
 			// for selection via the command line.  Can be one or more values.
