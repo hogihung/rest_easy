@@ -135,10 +135,6 @@ func display(filter string, value string) {
 	}
 }
 
-func filterJSON(filter string, targets URLTargets) {
-	fmt.Println("filterJSON was called for: ", targets)
-}
-
 func printOutput(targets URLTargets) {
 	for i := 0; i < len(targets.Target); i++ {
 		fmt.Println("URL: " + targets.Target[i].URL)
