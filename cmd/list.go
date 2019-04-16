@@ -122,16 +122,12 @@ func display(filter string, value string) {
 	if filter == "selection" {
 		Logr.Info("Value of selection (labels) is: ", value)
 
-		//fmt.Println("What is our selection? ", value)
 		splitSelection := s.Split(value, " ")
-		//fmt.Println("What is our split selection? ", splitSelection)
-		//fmt.Printf("What type is splitSelection? %T\n", splitSelection)
 		
 		// Filter to include only what we want for 'Selection (Labels)'
 		for _, target := range targets.Target {
 			// NOTE: For label we need to handle one or more strings as filters
 			if HasElem(splitSelection, target.Label) {
-			//if target.Label == value {
 				filteredTargets.Target = append(filteredTargets.Target, target)
 			}
 		}
