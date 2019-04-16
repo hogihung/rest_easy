@@ -27,6 +27,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"reflect"
 
 	Logr "github.com/Sirupsen/logrus"
 	"github.com/spf13/cobra"
@@ -150,4 +151,18 @@ func initLogging() bool {
 	}
 	Logr.Info("Begin logging events.")
 	return true
+}
+
+// HasElem function to check if element exists in passed slice
+func HasElem(s interface{}, elem interface{}) bool {
+	arrV := reflect.ValueOf(s)
+
+	if arrV.Kind() == reflect.Slice {
+		for i := 0; i < arrV.Len(); i++ {
+			if arrV.Index(i).Interface() == elem {
+				return true
+			}
+		}
+	}
+	return false
 }
