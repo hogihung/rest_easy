@@ -21,8 +21,6 @@
 package cmd
 
 import (
-	"fmt"
-
 	Logr "github.com/Sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
@@ -44,23 +42,21 @@ defined endpoints.`,
 		all := cmd.Flag("all").Value.String()
 		if all == "true" {
 			filterBy = "all"
-			fmt.Println("Filter set to: ", filterBy)
+			Filter(filterBy, all)
 			return
 		}
 
 		group := cmd.Flag("group").Value.String()
 		if group != "" {
 			filterBy = "group"
-			fmt.Println("Filter set to: ", filterBy)
-			fmt.Println("With a group value of: ", group)
+			Filter(filterBy, group)
 			return
 		}
 
 		selection := cmd.Flag("selection").Value.String()
 		if selection != "" {
 			filterBy = "selection"
-			fmt.Println("Filter set to: ", filterBy)
-			fmt.Println("With a selection of: ", selection)
+			Filter(filterBy, selection)
 			return
 		}
 	},

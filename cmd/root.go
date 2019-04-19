@@ -28,6 +28,7 @@ import (
 	"os"
 	"path/filepath"
 	"reflect"
+	s "strings"
 
 	Logr "github.com/Sirupsen/logrus"
 	"github.com/spf13/cobra"
@@ -153,8 +154,8 @@ func initLogging() bool {
 	return true
 }
 
-// HasElem function to check if element exists in passed slice
-func HasElem(s interface{}, elem interface{}) bool {
+// Contains function to check if element exists in passed slice
+func Contains(s interface{}, elem interface{}) bool {
 	arrV := reflect.ValueOf(s)
 
 	if arrV.Kind() == reflect.Slice {
@@ -165,4 +166,56 @@ func HasElem(s interface{}, elem interface{}) bool {
 		}
 	}
 	return false
+}
+// Filter records from our Struct collection
+func Filter(filter string, value string) {
+
+	//fmt.Println("Preparing to parse JSON for file: ", targetsFile)
+	Logr.Info("Preparing to parse JSON from file: ", targetsFile)
+	jsonFile, err := os.Open(targetsFile)
+	if err != nil {
+		fmt.Println(err) // change this to log.Fatal or panic
+	}
+	defer jsonFile.Close()
+
+	jsonValue, err := ioutil.ReadAll(jsonFile)
+	if err != nil {
+		fmt.Println(err) // change this to log.Fatal or panic
+	}
+
+	fmt.Println("-----------------------------------")
+	targets := URLTargets{}
+	_ = json.Unmarshal([]byte(jsonValue), &targets)
+
+	if filter == "all" {
+		Logr.Info("Value of all is: ", value)
+		printOutput(targets)
+	}
+
+	if filter == "group" {
+		Logr.Info("Value of group is: ", value)
+
+		// Filter to include only what we want for 'Group'
+		for _, target := range targets.Target {
+			if target.Group == value {
+				filteredTargets.Target = append(filteredTargets.Target, target)
+			}
+		}
+		printOutput(filteredTargets)
+	}
+
+	if filter == "selection" {
+		Logr.Info("Value of selection (labels) is: ", value)
+
+		splitSelection := s.Split(value, " ")
+		
+		// Filter to include only what we want for 'Selection (Labels)'
+		for _, target := range targets.Target {
+			// NOTE: For label we need to handle one or more strings as filters
+			if Contains(splitSelection, target.Label) {
+				filteredTargets.Target = append(filteredTargets.Target, target)
+			}
+		}
+		printOutput(filteredTargets)
+	}
 }

@@ -21,12 +21,8 @@
 package cmd
 
 import (
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"os"
-	s "strings"
-
+	
 	Logr "github.com/Sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
@@ -48,7 +44,7 @@ a group of endpoints to test, or a selection of endpoints to test.`,
 		if all == "true" {
 			filterBy = "all"
 			// This should print all of our records extracted from targets.json
-			display(filterBy, all)
+			Filter(filterBy, all)
 			return
 		}
 
@@ -58,7 +54,7 @@ a group of endpoints to test, or a selection of endpoints to test.`,
 			// Here we should only print records extracted from targets.json
 			// that contain a value for group that matches what was supplied
 			// via the command line.
-			display(filterBy, group)
+			Filter(filterBy, group)
 			return
 		}
 
@@ -68,7 +64,7 @@ a group of endpoints to test, or a selection of endpoints to test.`,
 			// Here we should only print records extracted from targets.json
 			// that contain a value(s) for label that matches what was supplied
 			// for selection via the command line.  Can be one or more values.
-			display(filterBy, selection)
+			Filter(filterBy, selection)
 			return
 		}
 	},
@@ -81,58 +77,6 @@ func init() {
 	listCmd.Flags().String("group", "", "Use for a targeted group")
 	listCmd.Flags().String("selection", "", "Use for a selection of items - 'labels'")
 	listCmd.PersistentFlags().StringVar(&targetsFile, "targets", "", "JSON formatted targets file (default is ./targets.json)")
-}
-
-func display(filter string, value string) {
-
-	//fmt.Println("Preparing to parse JSON for file: ", targetsFile)
-	Logr.Info("Preparing to parse JSON from file: ", targetsFile)
-	jsonFile, err := os.Open(targetsFile)
-	if err != nil {
-		fmt.Println(err) // change this to log.Fatal or panic
-	}
-	defer jsonFile.Close()
-
-	jsonValue, err := ioutil.ReadAll(jsonFile)
-	if err != nil {
-		fmt.Println(err) // change this to log.Fatal or panic
-	}
-
-	fmt.Println("-----------------------------------")
-	targets := URLTargets{}
-	_ = json.Unmarshal([]byte(jsonValue), &targets)
-
-	if filter == "all" {
-		Logr.Info("Value of all is: ", value)
-		printOutput(targets)
-	}
-
-	if filter == "group" {
-		Logr.Info("Value of group is: ", value)
-
-		// Filter to include only what we want for 'Group'
-		for _, target := range targets.Target {
-			if target.Group == value {
-				filteredTargets.Target = append(filteredTargets.Target, target)
-			}
-		}
-		printOutput(filteredTargets)
-	}
-
-	if filter == "selection" {
-		Logr.Info("Value of selection (labels) is: ", value)
-
-		splitSelection := s.Split(value, " ")
-		
-		// Filter to include only what we want for 'Selection (Labels)'
-		for _, target := range targets.Target {
-			// NOTE: For label we need to handle one or more strings as filters
-			if HasElem(splitSelection, target.Label) {
-				filteredTargets.Target = append(filteredTargets.Target, target)
-			}
-		}
-		printOutput(filteredTargets)
-	}
 }
 
 func printOutput(targets URLTargets) {
