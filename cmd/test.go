@@ -70,3 +70,10 @@ func init() {
 	testCmd.Flags().String("selection", "", "Use for a selection of items - 'labels'")
 	testCmd.PersistentFlags().StringVar(&targetsFile, "targets", "", "JSON formatted targets file (default is ./targets.json)")
 }
+
+// func executeTest(targets URLTargets) {
+// 	for i := 0; i < len(targets.Target); i++ {
+// 		fmt.Println("URL: " + targets.Target[i].URL)
+// 		fmt.Println("-------------------------------------------")
+// 	}
+// }
