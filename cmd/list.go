@@ -22,7 +22,7 @@ package cmd
 
 import (
 	"fmt"
-	
+
 	Logr "github.com/Sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
@@ -44,8 +44,8 @@ a group of endpoints to test, or a selection of endpoints to test.`,
 		if all == "true" {
 			filterBy = "all"
 			// This should print all of our records extracted from targets.json
-			Filter(filterBy, all)
-			return
+			listTargets := Filter(filterBy, all)
+			printOutput(listTargets)
 		}
 
 		group := cmd.Flag("group").Value.String()
@@ -54,8 +54,8 @@ a group of endpoints to test, or a selection of endpoints to test.`,
 			// Here we should only print records extracted from targets.json
 			// that contain a value for group that matches what was supplied
 			// via the command line.
-			Filter(filterBy, group)
-			return
+			listTargets := Filter(filterBy, group)
+			printOutput(listTargets)
 		}
 
 		selection := cmd.Flag("selection").Value.String()
@@ -64,8 +64,8 @@ a group of endpoints to test, or a selection of endpoints to test.`,
 			// Here we should only print records extracted from targets.json
 			// that contain a value(s) for label that matches what was supplied
 			// for selection via the command line.  Can be one or more values.
-			Filter(filterBy, selection)
-			return
+			listTargets := Filter(filterBy, selection)
+			printOutput(listTargets)
 		}
 	},
 }

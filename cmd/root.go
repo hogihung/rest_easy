@@ -167,9 +167,17 @@ func Contains(s interface{}, elem interface{}) bool {
 	}
 	return false
 }
-// Filter records from our Struct collection
-func Filter(filter string, value string) {
 
+// Filter records from our Struct collection
+func Filter(filter string, value string) URLTargets {
+
+	// NOTE: this function filters and then prints.  Need to break out the
+	//       code so filter just returns the filtered data so that we can
+	//       either print, like it does now, or can be used with the test
+	//       module where we execute our tests
+	//
+	//       Probably should return a URLTargets
+	//
 	//fmt.Println("Preparing to parse JSON for file: ", targetsFile)
 	Logr.Info("Preparing to parse JSON from file: ", targetsFile)
 	jsonFile, err := os.Open(targetsFile)
@@ -189,7 +197,9 @@ func Filter(filter string, value string) {
 
 	if filter == "all" {
 		Logr.Info("Value of all is: ", value)
-		printOutput(targets)
+		// TODO: instead of printing, we need to return targets?
+		// printOutput(targets)
+		return targets
 	}
 
 	if filter == "group" {
@@ -201,14 +211,16 @@ func Filter(filter string, value string) {
 				filteredTargets.Target = append(filteredTargets.Target, target)
 			}
 		}
-		printOutput(filteredTargets)
+		// TODO: instead of printing, we need to return targets?
+		// printOutput(filteredTargets)
+		return filteredTargets
 	}
 
 	if filter == "selection" {
 		Logr.Info("Value of selection (labels) is: ", value)
 
 		splitSelection := s.Split(value, " ")
-		
+
 		// Filter to include only what we want for 'Selection (Labels)'
 		for _, target := range targets.Target {
 			// NOTE: For label we need to handle one or more strings as filters
@@ -216,6 +228,9 @@ func Filter(filter string, value string) {
 				filteredTargets.Target = append(filteredTargets.Target, target)
 			}
 		}
-		printOutput(filteredTargets)
+		// TODO: instead of printing, we need to return targets?
+		// printOutput(filteredTargets)
+		return filteredTargets
 	}
+	return targets
 }
