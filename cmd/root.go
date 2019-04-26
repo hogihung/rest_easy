@@ -170,15 +170,6 @@ func Contains(s interface{}, elem interface{}) bool {
 
 // Filter records from our Struct collection
 func Filter(filter string, value string) URLTargets {
-
-	// NOTE: this function filters and then prints.  Need to break out the
-	//       code so filter just returns the filtered data so that we can
-	//       either print, like it does now, or can be used with the test
-	//       module where we execute our tests
-	//
-	//       Probably should return a URLTargets
-	//
-	//fmt.Println("Preparing to parse JSON for file: ", targetsFile)
 	Logr.Info("Preparing to parse JSON from file: ", targetsFile)
 	jsonFile, err := os.Open(targetsFile)
 	if err != nil {
@@ -197,8 +188,6 @@ func Filter(filter string, value string) URLTargets {
 
 	if filter == "all" {
 		Logr.Info("Value of all is: ", value)
-		// TODO: instead of printing, we need to return targets?
-		// printOutput(targets)
 		return targets
 	}
 
@@ -211,8 +200,6 @@ func Filter(filter string, value string) URLTargets {
 				filteredTargets.Target = append(filteredTargets.Target, target)
 			}
 		}
-		// TODO: instead of printing, we need to return targets?
-		// printOutput(filteredTargets)
 		return filteredTargets
 	}
 
@@ -228,8 +215,6 @@ func Filter(filter string, value string) URLTargets {
 				filteredTargets.Target = append(filteredTargets.Target, target)
 			}
 		}
-		// TODO: instead of printing, we need to return targets?
-		// printOutput(filteredTargets)
 		return filteredTargets
 	}
 	return targets

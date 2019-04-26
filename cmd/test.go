@@ -21,6 +21,8 @@
 package cmd
 
 import (
+	"fmt"
+
 	Logr "github.com/Sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
@@ -42,22 +44,22 @@ defined endpoints.`,
 		all := cmd.Flag("all").Value.String()
 		if all == "true" {
 			filterBy = "all"
-			Filter(filterBy, all)
-			return
+			testFilter := Filter(filterBy, all)
+			executeTest(testFilter)
 		}
 
 		group := cmd.Flag("group").Value.String()
 		if group != "" {
 			filterBy = "group"
-			Filter(filterBy, group)
-			return
+			testFilter := Filter(filterBy, group)
+			executeTest(testFilter)
 		}
 
 		selection := cmd.Flag("selection").Value.String()
 		if selection != "" {
 			filterBy = "selection"
-			Filter(filterBy, selection)
-			return
+			testFilter := Filter(filterBy, selection)
+			executeTest(testFilter)
 		}
 	},
 }
@@ -71,9 +73,10 @@ func init() {
 	testCmd.PersistentFlags().StringVar(&targetsFile, "targets", "", "JSON formatted targets file (default is ./targets.json)")
 }
 
-// func executeTest(targets URLTargets) {
-// 	for i := 0; i < len(targets.Target); i++ {
-// 		fmt.Println("URL: " + targets.Target[i].URL)
-// 		fmt.Println("-------------------------------------------")
-// 	}
-// }
+// TODO: basic functionality - need to build this out
+func executeTest(targets URLTargets) {
+	for i := 0; i < len(targets.Target); i++ {
+		fmt.Println("URL: " + targets.Target[i].URL)
+		fmt.Println("-------------------------------------------")
+	}
+}
