@@ -15,6 +15,12 @@
         "group": "core"
       },
       {
+        "url": "http://ognt.io",
+        "auth": "none",
+        "label": "hogi",
+        "group": "hung"
+      },
+      {
         "url": "http://some-url.com:7777/api/v3/status",
         "auth": "token",
         "token": "some-super-long-token-here",
