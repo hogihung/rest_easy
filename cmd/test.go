@@ -21,7 +21,10 @@
 package cmd
 
 import (
+	"bytes"
 	"fmt"
+	"io/ioutil"
+	"net/http"
 
 	Logr "github.com/Sirupsen/logrus"
 	"github.com/spf13/cobra"
@@ -80,3 +83,56 @@ func executeTest(targets URLTargets) {
 		fmt.Println("-------------------------------------------")
 	}
 }
+
+// function for a Basic Auth Request (taken from JBlastor DoHTTPPost)
+func executeBasicAuthGet(user, password) {
+	req, err := http.NewRequest("POST", *endpoint, bytes.NewBuffer(jsonValue))
+	req.Header.Set("X-Custom-Header", "RestEasy")
+	req.Header.Set("Content-Type", "application/json")
+	req.SetBasicAuth(user, password)
+
+	client := &http.Client{}
+	httpResponse, err := client.Do(req)
+
+	if err != nil {
+		Logr.Warn(err)
+		//log.Printf("executeBasicAuthGet: %#v: request: %#v", err, req)
+	}
+	defer httpResponse.Body.Close()
+
+	httpBody, _ := ioutil.ReadAll(httpResponse.Body)
+	if err != nil {
+		Logr.Warn(err)
+		//log.Printf("executeBasicAuthGet: %#v: request: %#v", err, httpResponse.Body)
+	}
+	ch <- HTTPResponse{httpResponse.Status, httpBody}
+}
+
+func isBasicAuth(auth string) bool {
+	if auth == "basic" {
+		return true
+	}
+	return false
+}
+
+func isTokenAuth(auth string) bool {
+	if auth == "token" {
+		return true
+	}
+	return false
+}
+
+func isNoneAuth(auth string) bool {
+	if auth == "none" {
+		return true
+	}
+	if isBasicAuth(auth) {
+		return false
+	}
+	if isTokenAuth(auth) {
+		return false
+	}
+	return false
+}
+
+// https://play.golang.org/p/00E-jJm5wLa
