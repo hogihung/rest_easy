@@ -21,10 +21,10 @@
 package cmd
 
 import (
-	"bytes"
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"strings"
 
 	Logr "github.com/Sirupsen/logrus"
 	"github.com/spf13/cobra"
@@ -80,23 +80,31 @@ func init() {
 func executeTest(targets URLTargets) {
 	for i := 0; i < len(targets.Target); i++ {
 		fmt.Println("URL: " + targets.Target[i].URL)
-		fmt.Println("-------------------------------------------")
+
+		if isNoneAuth(targets.Target[i].Auth) {
+			executeNoneAuthGet(targets.Target[i].URL)
+		}
+
+		if isBasicAuth(targets.Target[i].Auth) {
+			executeBasicAuthGet(targets.Target[i].URL, targets.Target[i].User, targets.Target[i].Pass)
+		}
+
+		if isTokenAuth(targets.Target[i].Auth) {
+			executeTokenAuthGet(targets.Target[i].URL, targets.Target[i].Token)
+		}
+		//Logr.Warn("Failed to determine auth type for record, moving on")
 	}
 }
 
-// function for a Basic Auth Request (taken from JBlastor DoHTTPPost)
-func executeBasicAuthGet(user, password) {
-	req, err := http.NewRequest("POST", *endpoint, bytes.NewBuffer(jsonValue))
-	req.Header.Set("X-Custom-Header", "RestEasy")
-	req.Header.Set("Content-Type", "application/json")
-	req.SetBasicAuth(user, password)
+// function for a None Auth Request
+func executeNoneAuthGet(url string) {
+	req, err := http.NewRequest("GET", url, nil)
 
 	client := &http.Client{}
 	httpResponse, err := client.Do(req)
 
 	if err != nil {
 		Logr.Warn(err)
-		//log.Printf("executeBasicAuthGet: %#v: request: %#v", err, req)
 	}
 	defer httpResponse.Body.Close()
 
@@ -105,7 +113,69 @@ func executeBasicAuthGet(user, password) {
 		Logr.Warn(err)
 		//log.Printf("executeBasicAuthGet: %#v: request: %#v", err, httpResponse.Body)
 	}
-	ch <- HTTPResponse{httpResponse.Status, httpBody}
+	bobots := HTTPResponse{httpResponse.Status, httpBody}
+	// Logr.Info(bobots.status) // NOTE: this is the same as the next line
+	// Logr.Info(httpResponse.Status)
+	// Logr.Info(string([]byte(httpBody)))
+
+	//Logr.Info(httpBody)
+	//ch <- HTTPResponse{httpResponse.Status, httpBody}
+
+	// Trial - almost what I was expecting.  However body seems encoded/encrypted
+	Logr.WithFields(Logr.Fields{
+		"status": bobots.status,
+		"body":   bobots.body,
+	}).Info("Good response eh?")
+}
+
+// function for a Basic Auth Request (taken from JBlastor DoHTTPPost)
+func executeBasicAuthGet(url string, user string, password string) {
+	r := strings.NewReader("request")
+	req, err := http.NewRequest("GET", url, r) // need an io.Reader
+	req.Header.Set("X-Custom-Header", "RestEasy")
+	//req.Header.Set("Content-Type", "application/json")
+	req.SetBasicAuth(user, password)
+
+	client := &http.Client{}
+	httpResponse, err := client.Do(req)
+
+	if err != nil {
+		Logr.Warn(err)
+	}
+	defer httpResponse.Body.Close()
+
+	httpBody, _ := ioutil.ReadAll(httpResponse.Body)
+	if err != nil {
+		Logr.Warn(err)
+		//log.Printf("executeBasicAuthGet: %#v: request: %#v", err, httpResponse.Body)
+	}
+	//Logr.Info(httpBody)
+	Logr.Info(string([]byte(httpBody)))
+	//ch <- HTTPResponse{httpResponse.Status, httpBody}
+}
+
+// function for a Token Auth Request
+func executeTokenAuthGet(url string, token string) {
+	var bearer = "Bearer " + token
+
+	req, err := http.NewRequest("GET", url, nil)
+	req.Header.Add("Authorization", bearer)
+
+	client := &http.Client{}
+	httpResponse, err := client.Do(req)
+
+	if err != nil {
+		Logr.Warn(err)
+	}
+	defer httpResponse.Body.Close()
+
+	httpBody, _ := ioutil.ReadAll(httpResponse.Body)
+	if err != nil {
+		Logr.Warn(err)
+		//log.Printf("executeBasicAuthGet: %#v: request: %#v", err, httpResponse.Body)
+	}
+	Logr.Info(string([]byte(httpBody)))
+	//ch <- HTTPResponse{httpResponse.Status, httpBody}
 }
 
 func isBasicAuth(auth string) bool {
@@ -136,3 +206,10 @@ func isNoneAuth(auth string) bool {
 }
 
 // https://play.golang.org/p/00E-jJm5wLa
+
+// HTTPResponse is a struct for handling the responses we will be getting from
+// our GET requests.
+type HTTPResponse struct {
+	status string
+	body   []byte
+}
