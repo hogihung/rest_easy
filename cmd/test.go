@@ -24,7 +24,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"strings"
 
 	Logr "github.com/Sirupsen/logrus"
 	"github.com/spf13/cobra"
@@ -116,6 +115,8 @@ func executeNoneAuthGet(url string) {
 		Logr.Warn(err)
 		//log.Printf("executeBasicAuthGet: %v: request: %v", err, httpResponse.Body)
 	}
+	// NOTE: if we have an error above, we should log and not continue processing
+
 	bobots := HTTPResponse{httpResponse.Status, httpBody}
 	// Logr.Info(bobots.status) // NOTE: this is the same as the next line
 	// Logr.Info(httpResponse.Status)
@@ -133,10 +134,7 @@ func executeNoneAuthGet(url string) {
 
 // function for a Basic Auth Request (taken from JBlastor DoHTTPPost)
 func executeBasicAuthGet(url string, user string, password string) {
-	r := strings.NewReader("request")
-	req, err := http.NewRequest("GET", url, r) // need an io.Reader
-	req.Header.Set("X-Custom-Header", "RestEasy")
-	//req.Header.Set("Content-Type", "application/json")
+	req, err := http.NewRequest("GET", url, nil)
 	req.SetBasicAuth(user, password)
 
 	client := &http.Client{}
@@ -152,6 +150,7 @@ func executeBasicAuthGet(url string, user string, password string) {
 		Logr.Warn(err)
 		//log.Printf("executeBasicAuthGet: %#v: request: %#v", err, httpResponse.Body)
 	}
+	// NOTE: if we have an error above, we should log and not continue processing
 	//Logr.Info(httpBody)
 	Logr.Info(string([]byte(httpBody)))
 	//ch <- HTTPResponse{httpResponse.Status, httpBody}
@@ -177,6 +176,7 @@ func executeTokenAuthGet(url string, token string) {
 		Logr.Warn(err)
 		//log.Printf("executeBasicAuthGet: %#v: request: %#v", err, httpResponse.Body)
 	}
+	// NOTE: if we have an error above, we should log and not continue processing
 	Logr.Info(string([]byte(httpBody)))
 	//ch <- HTTPResponse{httpResponse.Status, httpBody}
 }
