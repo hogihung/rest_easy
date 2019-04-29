@@ -82,6 +82,10 @@ func executeTest(targets URLTargets) {
 		fmt.Println("URL: " + targets.Target[i].URL)
 
 		if isNoneAuth(targets.Target[i].Auth) {
+			// TODO: need to have below method return nil, error
+			//       will need to update the function defintion
+			//       and then make small updates here and for
+			//       each similar call.
 			executeNoneAuthGet(targets.Target[i].URL)
 		}
 
