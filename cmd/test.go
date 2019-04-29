@@ -95,7 +95,7 @@ func executeTest(targets URLTargets) {
 			executeTokenAuthGet(targets.Target[i].URL, targets.Target[i].Token)
 			return
 		}
-		Logr.Warn("Failed to determine auth type for record, moving on")
+		Logr.Warn("Failed to determine auth type for URL ", targets.Target[i].URL, ", moving on")
 	}
 }
 
@@ -114,7 +114,7 @@ func executeNoneAuthGet(url string) {
 	httpBody, _ := ioutil.ReadAll(httpResponse.Body)
 	if err != nil {
 		Logr.Warn(err)
-		//log.Printf("executeBasicAuthGet: %#v: request: %#v", err, httpResponse.Body)
+		//log.Printf("executeBasicAuthGet: %v: request: %v", err, httpResponse.Body)
 	}
 	bobots := HTTPResponse{httpResponse.Status, httpBody}
 	// Logr.Info(bobots.status) // NOTE: this is the same as the next line
