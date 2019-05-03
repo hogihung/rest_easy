@@ -112,7 +112,6 @@ func executeNoneAuthGet(url string) {
 	httpBody, _ := ioutil.ReadAll(httpResponse.Body)
 	if err != nil {
 		Logr.Warn(err)
-		//log.Printf("executeBasicAuthGet: %v: request: %v", err, httpResponse.Body)
 	}
 	// NOTE: if we have an error above, we should log and not continue processing
 
@@ -147,7 +146,6 @@ func executeBasicAuthGet(url string, user string, password string) {
 	httpBody, _ := ioutil.ReadAll(httpResponse.Body)
 	if err != nil {
 		Logr.Warn(err)
-		//log.Printf("executeBasicAuthGet: %#v: request: %#v", err, httpResponse.Body)
 	}
 	// NOTE: if we have an error above, we should log and not continue processing
 	//Logr.Info(httpBody)
@@ -173,7 +171,6 @@ func executeTokenAuthGet(url string, token string) {
 	httpBody, _ := ioutil.ReadAll(httpResponse.Body)
 	if err != nil {
 		Logr.Warn(err)
-		//log.Printf("executeBasicAuthGet: %#v: request: %#v", err, httpResponse.Body)
 	}
 	// NOTE: if we have an error above, we should log and not continue processing
 	Logr.Info(string([]byte(httpBody)))
@@ -206,8 +203,6 @@ func isNoneAuth(auth string) bool {
 	}
 	return false
 }
-
-// https://play.golang.org/p/00E-jJm5wLa
 
 // HTTPResponse is a struct for handling the responses we will be getting from
 // our GET requests.
