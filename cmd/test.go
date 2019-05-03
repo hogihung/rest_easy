@@ -21,7 +21,6 @@
 package cmd
 
 import (
-	"fmt"
 	"io/ioutil"
 	"net/http"
 
@@ -78,7 +77,7 @@ func init() {
 // TODO: basic functionality - need to build this out
 func executeTest(targets URLTargets) {
 	for i := 0; i < len(targets.Target); i++ {
-		fmt.Println("URL: " + targets.Target[i].URL)
+		Logr.Info("Preparing to execute a test to target url: ", targets.Target[i].URL)
 
 		if isNoneAuth(targets.Target[i].Auth) {
 			executeNoneAuthGet(targets.Target[i].URL)
@@ -128,7 +127,7 @@ func executeNoneAuthGet(url string) {
 	// Trial - almost what I was expecting.  However body seems encoded/encrypted
 	Logr.WithFields(Logr.Fields{
 		"status": bobots.status,
-		"body":   bobots.body,
+		//"body":   bobots.body,
 	}).Info("Good response eh?")
 }
 
