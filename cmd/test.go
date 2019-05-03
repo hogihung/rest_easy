@@ -126,7 +126,7 @@ func executeNoneAuthGet(url string) {
 	// Trial - almost what I was expecting.  However body seems encoded/encrypted
 	Logr.WithFields(Logr.Fields{
 		"status": bobots.status,
-		//"body":   bobots.body,
+		//"body":   string([]byte(bobots.body)),
 	}).Info("Good response eh?")
 }
 
