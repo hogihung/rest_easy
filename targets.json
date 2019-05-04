@@ -1,50 +1,59 @@
 {
     "url_targets": [
       {
-        "url": "http://some-url.com:7778/api/v1/version",
-        "auth": "basic",
-        "user": "anon-user",
-        "pass": "some-pass",
-        "label": "app-01",
-        "group": "core"
-      },
-      {
-        "url": "http://some-url.com:7780/api/v2/version",
-        "auth": "none",
-        "label": "app-02",
-        "group": "core"
-      },
-      {
         "url": "http://ognt.io",
         "auth": "none",
         "label": "hogi",
-        "group": "hung"
+        "group": "blog"
       },
       {
-        "url": "http://ognt.io",
-        "auth": "bobots",
-        "group": "nurny"
+        "url": "https://github.com/hogihung",
+        "auth": "none",
+        "label": "hogi",
+        "group": "code"
       },
       {
-        "url": "http://some-url.com:7777/api/v3/status",
-        "auth": "token",
-        "token": "some-super-long-token-here",
-        "label": "app-04",
-        "group": "base"
+        "url": "http://github.com",
+        "auth": "none",
+        "group": "code"
       },
       {
-        "url": "http://some-url.com:7778/api/v1/db-ver"
+        "url": "https://play.golang.org",
+        "auth": "none",
+        "label": "go",
+        "group": "programming"
       },
       {
-        "url": "http://some-url.com:7778/api/v1/version",
+        "url": "http://nurnybobots.com",
+        "auth": "none",
+        "group": "error"
+      },
+      {
+        "url": "http://localhost:9080/cloudmeta-api/v1/status/db-status",
+        "auth": "none",
+        "lable": "db-status",
+        "group": "cms-api"
+      },
+      {
+        "url": "http://localhost:9080/cloudmeta-api/v1/status/version",
+        "auth": "none",
+        "label": "version",
+        "group": "cms-api"
+      },
+      {
+        "url": "http://localhost:9080/cloudmeta-api/v1/admin/status",
         "auth": "basic",
-        "user": "anon-user",
-        "pass": "some-pass"
+        "user": "cmadmin",
+        "pass": "be3fcak3eat3rb3e328f05be0f7", 
+        "label": "admin-status",
+        "group": "admin"
       },
       {
-        "url": "http://some-url.com:7778/api/v1/version",
+        "url": "http://localhost:9080/cloudmeta-api/v1/hosts",
         "auth": "token",
-        "token": "some-super-long-token-here"
+        "token": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZW8tcGEiLCJ0eXAiOiJhY2Nlc3MiLCJuYW1lIjoiSm9obiBIb2dhcnR5IiwiZW1haWwiOiJqb2huLmhvZ2FydHlAb3JhY2xlLmNvbSIsImV4cCI6MTU1NzYwODM4NX0.YDDgEvrJNaN7SHFYwIIJRlOYuPvlUYaI266mqPw5kkk", 
+        "label": "hosts",
+        "group": "user"
       }
     ]
 }
