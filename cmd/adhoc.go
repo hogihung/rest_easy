@@ -21,8 +21,6 @@
 package cmd
 
 import (
-	"fmt"
-
 	Logr "github.com/Sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
@@ -39,20 +37,26 @@ optional flags/arguments for authentication.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		Logr.Info("-- Adhoc sub-command called")
 
-		endpoint := cmd.Flag("endpoint").Value.String()
-		fmt.Println("Endpoint: ", endpoint)
-
+		url := cmd.Flag("endpoint").Value.String()
 		auth := cmd.Flag("auth").Value.String()
-		fmt.Println("Auth: ", auth)
-
 		user := cmd.Flag("user").Value.String()
-		fmt.Println("User: ", user)
-
 		pass := cmd.Flag("pass").Value.String()
-		fmt.Println("Password: ", pass)
-
 		token := cmd.Flag("token").Value.String()
-		fmt.Println("Token: ", token)
+
+		Logr.Info("Preparing to execute Ahoc request to url: ", url)
+
+		if isNoneAuth(auth) {
+			executeNoneAuthGet(url)
+		}
+
+		if isBasicAuth(auth) {
+			executeBasicAuthGet(url, user, pass)
+		}
+
+		if isTokenAuth(auth) {
+			executeTokenAuthGet(url, token)
+		}
+
 	},
 }
 
