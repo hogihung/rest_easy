@@ -112,17 +112,8 @@ func executeNoneAuthGet(url string) {
 	}
 
 	result := HTTPResponse{httpResponse.Status, httpBody}
-	// Logr.Info(bobots.status) // NOTE: this is the same as the next line
-	// Logr.Info(httpResponse.Status)
-	// Logr.Info(string([]byte(httpBody)))
-
-	//Logr.Info(httpBody)
-	//ch <- HTTPResponse{httpResponse.Status, httpBody}
-
-	// Trial - almost what I was expecting.  However body seems encoded/encrypted
 	Logr.WithFields(Logr.Fields{
 		"status": result.status,
-		//"body":   string([]byte(result.body)),
 	}).Info("Request completed for: ", url)
 }
 
