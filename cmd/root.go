@@ -150,7 +150,7 @@ func initLogging() bool {
 	} else {
 		Logr.SetOutput(logFileFH)
 	}
-	Logr.Info("Begin logging events.")
+	Logr.Info("BEGIN logging events.")
 	return true
 }
 
@@ -187,12 +187,12 @@ func Filter(filter string, value string) URLTargets {
 	_ = json.Unmarshal([]byte(jsonValue), &targets)
 
 	if filter == "all" {
-		Logr.Info("Value of all is: ", value)
+		Logr.Info("Filter set to all")
 		return targets
 	}
 
 	if filter == "group" {
-		Logr.Info("Value of group is: ", value)
+		Logr.Info("Filtering by group: ", value)
 
 		// Filter to include only what we want for 'Group'
 		for _, target := range targets.Target {
@@ -204,7 +204,7 @@ func Filter(filter string, value string) URLTargets {
 	}
 
 	if filter == "selection" {
-		Logr.Info("Value of selection (labels) is: ", value)
+		Logr.Info("Filtering by selection (labels): ", value)
 
 		splitSelection := s.Split(value, " ")
 
