@@ -74,30 +74,25 @@ func init() {
 	testCmd.PersistentFlags().StringVar(&targetsFile, "targets", "", "JSON formatted targets file (default is ./targets.json)")
 }
 
-// TODO: basic functionality - need to build this out
 func executeTest(targets URLTargets) {
 	for i := 0; i < len(targets.Target); i++ {
-		Logr.Info("Preparing to execute a test to target url: ", targets.Target[i].URL)
+		Logr.Info("Preparing to execute a request to url: ", targets.Target[i].URL)
 
 		if isNoneAuth(targets.Target[i].Auth) {
 			executeNoneAuthGet(targets.Target[i].URL)
-			return
 		}
 
 		if isBasicAuth(targets.Target[i].Auth) {
 			executeBasicAuthGet(targets.Target[i].URL, targets.Target[i].User, targets.Target[i].Pass)
-			return
 		}
 
 		if isTokenAuth(targets.Target[i].Auth) {
 			executeTokenAuthGet(targets.Target[i].URL, targets.Target[i].Token)
-			return
 		}
-		Logr.Warn("Failed to determine auth type for URL ", targets.Target[i].URL, ", moving on")
+		//Logr.Warn("Failed to determine auth type for URL ", targets.Target[i].URL, ", moving on")
 	}
 }
 
-// function for a None Auth Request
 func executeNoneAuthGet(url string) {
 	req, err := http.NewRequest("GET", url, nil)
 
@@ -106,16 +101,17 @@ func executeNoneAuthGet(url string) {
 
 	if err != nil {
 		Logr.Warn(err)
+		return
 	}
 	defer httpResponse.Body.Close()
 
 	httpBody, _ := ioutil.ReadAll(httpResponse.Body)
 	if err != nil {
 		Logr.Warn(err)
+		return
 	}
-	// NOTE: if we have an error above, we should log and not continue processing
 
-	bobots := HTTPResponse{httpResponse.Status, httpBody}
+	result := HTTPResponse{httpResponse.Status, httpBody}
 	// Logr.Info(bobots.status) // NOTE: this is the same as the next line
 	// Logr.Info(httpResponse.Status)
 	// Logr.Info(string([]byte(httpBody)))
@@ -125,12 +121,11 @@ func executeNoneAuthGet(url string) {
 
 	// Trial - almost what I was expecting.  However body seems encoded/encrypted
 	Logr.WithFields(Logr.Fields{
-		"status": bobots.status,
-		//"body":   string([]byte(bobots.body)),
-	}).Info("Good response eh?")
+		"status": result.status,
+		//"body":   string([]byte(result.body)),
+	}).Info("Request completed for: ", url)
 }
 
-// function for a Basic Auth Request (taken from JBlastor DoHTTPPost)
 func executeBasicAuthGet(url string, user string, password string) {
 	req, err := http.NewRequest("GET", url, nil)
 	req.SetBasicAuth(user, password)
@@ -140,20 +135,23 @@ func executeBasicAuthGet(url string, user string, password string) {
 
 	if err != nil {
 		Logr.Warn(err)
+		return
 	}
 	defer httpResponse.Body.Close()
 
 	httpBody, _ := ioutil.ReadAll(httpResponse.Body)
 	if err != nil {
 		Logr.Warn(err)
+		return
 	}
-	// NOTE: if we have an error above, we should log and not continue processing
-	//Logr.Info(httpBody)
-	Logr.Info(string([]byte(httpBody)))
-	//ch <- HTTPResponse{httpResponse.Status, httpBody}
+
+	result := HTTPResponse{httpResponse.Status, httpBody}
+	Logr.WithFields(Logr.Fields{
+		"status": result.status,
+	}).Info("Request completed for: ", url)
+
 }
 
-// function for a Token Auth Request
 func executeTokenAuthGet(url string, token string) {
 	var bearer = "Bearer " + token
 
@@ -165,16 +163,21 @@ func executeTokenAuthGet(url string, token string) {
 
 	if err != nil {
 		Logr.Warn(err)
+		return
 	}
 	defer httpResponse.Body.Close()
 
 	httpBody, _ := ioutil.ReadAll(httpResponse.Body)
 	if err != nil {
 		Logr.Warn(err)
+		return
 	}
-	// NOTE: if we have an error above, we should log and not continue processing
-	Logr.Info(string([]byte(httpBody)))
-	//ch <- HTTPResponse{httpResponse.Status, httpBody}
+
+	result := HTTPResponse{httpResponse.Status, httpBody}
+	Logr.WithFields(Logr.Fields{
+		"status": result.status,
+	}).Info("Request completed for: ", url)
+
 }
 
 func isBasicAuth(auth string) bool {
@@ -202,6 +205,21 @@ func isNoneAuth(auth string) bool {
 		return false
 	}
 	return false
+}
+
+// NOTE: I'm not happy with this.  Need to find a better way so that we can
+//       create log entry when auth type is not determinable
+func isUnknownAuth(auth string) bool {
+	if auth == "none" {
+		return false
+	}
+	if isBasicAuth(auth) {
+		return false
+	}
+	if isTokenAuth(auth) {
+		return false
+	}
+	return true
 }
 
 // HTTPResponse is a struct for handling the responses we will be getting from
