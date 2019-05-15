@@ -6,7 +6,15 @@ read this file on initalization and execute REST GET requests to the target
 endpoints.  It will display the results to the screen, and optionally print to
 a log file.
 
-
+## Installation
+1) Install Go, following instructions at golang.org/doc/install or, for Mac, you can just use homebrew:
+```bash
+brew install go &&
+export GOPATH=$HOME/go; export PATH=$PATH:$GOPATH/bin &&
+go get -u github.com/hogihung/rest_easy &&
+cd $GOPATH/src/github.com/hogihung/rest_easy &&
+go build
+```
 
 ## Example Usuage:
 
