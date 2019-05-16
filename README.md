@@ -14,7 +14,9 @@ export GOPATH=$HOME/go; export PATH=$PATH:$GOPATH/bin &&
 go get -u github.com/hogihung/rest_easy &&
 cd $GOPATH/src/github.com/hogihung/rest_easy &&
 go build &&
-touch rest_easy.log
+touch rest_easy.log &&
+npm install &&
+npm run test
 ```
 
 ## Example Usage:
