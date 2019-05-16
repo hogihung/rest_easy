@@ -58,8 +58,8 @@ test('command2 rest_easy adhoc', async (done) => {
   done();
 });
 
-test('command3', async (done) => {
-  const { stdout, stderr } = await exec('echo "true"');
+test('command3 rest_easy list', async (done) => {
+  const { stdout, stderr } = await exec('rest_easy list');
   if (logFlag === 'Y') { console.log('stdout: ',stdout,'\n','stderr: ',stderr); }
   expect(stdout).toBe( mtrim
     `true
@@ -68,8 +68,8 @@ test('command3', async (done) => {
   done();
 });
 
-test('command4', async (done) => {
-  const { stdout, stderr } = await exec('echo "true"');
+test('command4 rest_easy test', async (done) => {
+  const { stdout, stderr } = await exec('rest_easy test');
   if (logFlag === 'Y') { console.log('stdout: ',stdout,'\n','stderr: ',stderr); }
   expect(stdout).toBe( mtrim
     `true
