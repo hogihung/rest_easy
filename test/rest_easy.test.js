@@ -43,10 +43,9 @@ test('command1 rest_easy', async (done) => {
 });
 
 test('command2 rest_easy adhoc', async (done) => {
-  console.log('ahweahlkelwkh')
   try {
   const { stdout, stderr, err } = await exec('rest_easy adhoc');
-  console.log('stdout: ',stdout,'\n','stderr: ',stderr); 
+  if (logFlag === 'Y') { console.log('stdout: ',stdout,'\n','stderr: ',stderr); }
   expect(stdout).toEqual(
     expect.stringContaining(
     "File does not exist:"
@@ -110,8 +109,8 @@ test('verify folder structure prior to @availity/workflow scaffold', async (done
      package.json
      rest_easy
      rest_easy.log
-     rest_easy.test.js
      targets.json
+     test
     `
   )
   done();
