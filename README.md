@@ -16,7 +16,11 @@ cd $GOPATH/src/github.com/hogihung/rest_easy &&
 go build
 ```
 
-## Example Usuage:
+## Example Usage:
+```bash
+rest_easy list --targets ./targets.json --log ./rest_easy.log &&
+cat rest_easy.log
+```
 
 ```
 ➜  rest_easy>  rest_easy 
@@ -43,5 +47,3 @@ Flags:
 Use "rest_easy [command] --help" for more information about a command.
 ➜  rest_easy>
 ```
-
-
