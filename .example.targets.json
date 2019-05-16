@@ -1,0 +1,32 @@
+{
+    "url_targets": [
+      {
+        "url": "http://ognt.io",
+        "auth": "none",
+        "label": "hogi",
+        "group": "blog"
+      },
+      {
+        "url": "https://github.com/hogihung",
+        "auth": "none",
+        "label": "hogi",
+        "group": "code"
+      },
+      {
+        "url": "http://github.com",
+        "auth": "none",
+        "group": "code"
+      },
+      {
+        "url": "https://play.golang.org",
+        "auth": "none",
+        "label": "go",
+        "group": "programming"
+      },
+      {
+        "url": "http://nurnybobots.com",
+        "auth": "none",
+        "group": "error"
+      }
+    ]
+}

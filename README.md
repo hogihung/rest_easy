@@ -13,19 +13,20 @@ brew install go &&
 export GOPATH=$HOME/go; export PATH=$PATH:$GOPATH/bin &&
 go get -u github.com/hogihung/rest_easy &&
 cd $GOPATH/src/github.com/hogihung/rest_easy &&
-go build
+go build &&
+touch rest_easy.log
 ```
 
 ## Example Usage:
 ```bash
-rest_easy list --targets ./targets.json --log ./rest_easy.log &&
+rest_easy list --targets ./.example.targets.json --log ./rest_easy.log &&
 cat rest_easy.log
 ```
 
 ```
-➜  rest_easy>  rest_easy 
+➜  rest_easy>  rest_easy
 REST Easy is a command line utility, which takes a JSON formatted configuration
-file and performs REST GET requests against the defined target endpoints. 
+file and performs REST GET requests against the defined target endpoints.
 
 Using this app, with JSON formatted config file, one can run n number of GET requests to the
 defined target endpoints and display the response to the terminal (default) and/or write the
