@@ -3,6 +3,7 @@ const exec = util.promisify(require('child_process').exec);
 const { mtrim } = require('js-trim-multiline-string');
 
 const logFlag = 'N' // Y / N
+const hardcodedDefaults = ' --targets ./.example.targets.json --log ./rest_easy.log && cat rest_easy.log '
 
 test('use echo true command to verify exec child_process working correctly', async (done) => {
   const { stdout, stderr } = await exec('echo "true"');
@@ -42,61 +43,62 @@ test('command1 rest_easy', async (done) => {
   done();
 });
 
-test('command2 rest_easy adhoc', async (done) => {
-  try {
-  const { stdout, stderr, err } = await exec('rest_easy adhoc');
-  if (logFlag === 'Y') { console.log('stdout: ',stdout,'\n','stderr: ',stderr); }
-  expect(stdout).toEqual(
-    expect.stringContaining(
-    "File does not exist:"
-    )
-  )
-  }
-  catch (e){
-    console.log({e})
-  }
-  done();
-});
+// test('command2 rest_easy adhoc', async (done) => {
+//   try {
+//   const { stdout, stderr, err } = await exec('rest_easy adhoc'+hardcodedDefaults);
+//   if (logFlag === 'Y') { console.log('stdout: ',stdout,'\n','stderr: ',stderr); }
+//   expect(stdout).toEqual(
+//     expect.stringContaining(
+//     "File does not exist:"
+//     )
+//   )
+//   }
+//   catch (e){
+//     console.log({e})
+//   }
+//   done();
+// });
 
 test('command3 rest_easy list', async (done) => {
-  const { stdout, stderr } = await exec('rest_easy list');
+  const { stdout, stderr } = await exec('rest_easy list'+hardcodedDefaults);
   if (logFlag === 'Y') { console.log('stdout: ',stdout,'\n','stderr: ',stderr); }
-  expect(stdout).toBe( mtrim
-    `true
-    `
+  expect(stdout).toEqual( 
+    expect.stringContaining(
+      "\"level\":\"info\",\"msg\":\"BEGIN logging events.\""
+    )
   )
   done();
 });
 
-test('command4 rest_easy test', async (done) => {
-  const { stdout, stderr } = await exec('rest_easy test');
-  if (logFlag === 'Y') { console.log('stdout: ',stdout,'\n','stderr: ',stderr); }
-  expect(stdout).toBe( mtrim
-    `true
-    `
-  )
-  done();
-});
-
-test('command5', async (done) => {
-  const { stdout, stderr } = await exec('echo "true"');
-  if (logFlag === 'Y') { console.log('stdout: ',stdout,'\n','stderr: ',stderr); }
-  expect(stdout).toBe( mtrim
-    `true
-    `
-  )
-  done();
-});
-
-test('command6', async (done) => {
-  const { stdout, stderr } = await exec('echo "true"');
-  if (logFlag === 'Y') { console.log('stdout: ',stdout,'\n','stderr: ',stderr); }
-  expect(stdout).toBe( mtrim `true
-    `
-  )
-  done();
-});
-
+// test('command4 rest_easy test', async (done) => {
+//   const { stdout, stderr } = await exec('rest_easy test');
+//   if (logFlag === 'Y') { console.log('stdout: ',stdout,'\n','stderr: ',stderr); }
+//   expect(stdout).toBe( mtrim
+//     `true
+//     `
+//   )
+//   done();
+// });
+// 
+// test('command5', async (done) => {
+//   const { stdout, stderr } = await exec('echo "true"');
+//   if (logFlag === 'Y') { console.log('stdout: ',stdout,'\n','stderr: ',stderr); }
+//   expect(stdout).toBe( mtrim
+//     `true
+//     `
+//   )
+//   done();
+// });
+// 
+// test('command6', async (done) => {
+//   const { stdout, stderr } = await exec('echo "true"');
+//   if (logFlag === 'Y') { console.log('stdout: ',stdout,'\n','stderr: ',stderr); }
+//   expect(stdout).toBe( mtrim `true
+//     `
+//   )
+//   done();
+// });
+ 
 test('verify folder structure prior to @availity/workflow scaffold', async (done) => {
   const { stdout, stderr } = await exec('ls');
   if (logFlag === 'Y') { console.log('stdout: ',stdout,'\n','stderr: ',stderr); }
