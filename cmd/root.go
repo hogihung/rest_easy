@@ -182,7 +182,6 @@ func Filter(filter string, value string) URLTargets {
 		fmt.Println(err) // change this to log.Fatal or panic
 	}
 
-	fmt.Println("-----------------------------------")
 	targets := URLTargets{}
 	_ = json.Unmarshal([]byte(jsonValue), &targets)
 
