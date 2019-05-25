@@ -21,6 +21,7 @@
 package cmd
 
 import (
+	"fmt"
 	"io/ioutil"
 	"net/http"
 
@@ -115,6 +116,7 @@ func executeNoneAuthGet(url string) {
 	Logr.WithFields(Logr.Fields{
 		"status": result.status,
 	}).Info("Request completed for: ", url)
+	fmt.Printf(string(result.body) + "\n")
 }
 
 func executeBasicAuthGet(url string, user string, password string) {
@@ -140,7 +142,7 @@ func executeBasicAuthGet(url string, user string, password string) {
 	Logr.WithFields(Logr.Fields{
 		"status": result.status,
 	}).Info("Request completed for: ", url)
-
+	fmt.Printf(string(result.body) + "\n")
 }
 
 func executeTokenAuthGet(url string, token string) {
@@ -168,7 +170,7 @@ func executeTokenAuthGet(url string, token string) {
 	Logr.WithFields(Logr.Fields{
 		"status": result.status,
 	}).Info("Request completed for: ", url)
-
+	fmt.Printf(string(result.body) + "\n")
 }
 
 func isBasicAuth(auth string) bool {
@@ -213,7 +215,7 @@ func isUnknownAuth(auth string) bool {
 	return true
 }
 
-// HTTPResponse is a struct for handling the responses we will be getting from
+// HTTPResponse is a struct for handling the responses we will be receiving from
 // our GET requests.
 type HTTPResponse struct {
 	status string
