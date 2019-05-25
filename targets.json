@@ -31,7 +31,7 @@
       {
         "url": "http://localhost:9080/cloudmeta-api/v1/status/db-status",
         "auth": "none",
-        "lable": "db-status",
+        "label": "db-status",
         "group": "cms-api"
       },
       {
@@ -46,14 +46,14 @@
         "user": "cmadmin",
         "pass": "be3fcak3eat3rb3e328f05be0f7", 
         "label": "admin-status",
-        "group": "admin"
+        "group": "cms-api"
       },
       {
         "url": "http://localhost:9080/cloudmeta-api/v1/hosts",
         "auth": "token",
-        "token": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZW8tcGEiLCJ0eXAiOiJhY2Nlc3MiLCJuYW1lIjoiSm9obiBIb2dhcnR5IiwiZW1haWwiOiJqb2huLmhvZ2FydHlAb3JhY2xlLmNvbSIsImV4cCI6MTU1NzYwODM4NX0.YDDgEvrJNaN7SHFYwIIJRlOYuPvlUYaI266mqPw5kkk", 
+        "token": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZW8tcGEiLCJ0eXAiOiJhY2Nlc3MiLCJuYW1lIjoiSm9obiBIb2dhcnR5IiwiZW1haWwiOiJqb2huLmhvZ2FydHlAb3JhY2xlLmNvbSIsImV4cCI6MTU1OTQwODI5MX0.b3IQmkg1RIQ3uNMiXhlmvsMK0EZbGEEReZR2VVU3kG4", 
         "label": "hosts",
-        "group": "user"
+        "group": "cms-api"
       }
     ]
 }
