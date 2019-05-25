@@ -80,6 +80,7 @@ func init() {
 }
 
 func printOutput(targets URLTargets) {
+	fmt.Println("-------------------------------------------")
 	for i := 0; i < len(targets.Target); i++ {
 		fmt.Println("URL: " + targets.Target[i].URL)
 		fmt.Println("Auth: " + targets.Target[i].Auth)
