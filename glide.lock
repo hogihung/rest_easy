@@ -1,0 +1,18 @@
+hash: c10f3b4296a61df7a7fc8ad3c3aec297c2366f8dacc6bfc55551a896ed1c5580
+updated: 2019-06-09T19:16:00.314556368-04:00
+imports:
+- name: github.com/inconshreveable/mousetrap
+  version: 76626ae9c91c4f2a10f34cad8ce83ea42c93bb75
+- name: github.com/konsorten/go-windows-terminal-sequences
+  version: f55edac94c9bbba5d6182a4be46d86a2c9b5b50e
+- name: github.com/Sirupsen/logrus
+  version: 839c75faf7f98a33d445d181f3018b5c3409a45e
+- name: github.com/spf13/cobra
+  version: f2b07da1e2c38d5f12845a4f607e2e1018cbb1f5
+- name: github.com/spf13/pflag
+  version: 24fa6976df40757dce6aea913e7b81ade90530e1
+- name: golang.org/x/sys
+  version: 301114b31cced3624480dfb114ca1b495ec69aa5
+  subpackages:
+  - unix
+testImports: []
