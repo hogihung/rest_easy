@@ -1,0 +1,6 @@
+package: github.com/hogihung/rest_easy
+import:
+- package: github.com/Sirupsen/logrus
+  version: ^1.4.2
+- package: github.com/spf13/cobra
+  version: ^0.0.5
