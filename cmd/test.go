@@ -72,6 +72,8 @@ func init() {
 	testCmd.Flags().BoolP("all", "a", false, "Use to test all items in JSON file")
 	testCmd.Flags().String("group", "", "Use for a targeted group")
 	testCmd.Flags().String("selection", "", "Use for a selection of items - 'labels'")
+	// TODO: how can I get this flag working?
+	//testCmd.Flags().String("output", "", "Output to screen (default), to log file (log) or both (both)")
 	testCmd.PersistentFlags().StringVar(&targetsFile, "targets", "", "JSON formatted targets file (default is ./targets.json)")
 }
 
@@ -116,7 +118,7 @@ func executeNoneAuthGet(url string) {
 	Logr.WithFields(Logr.Fields{
 		"status": result.status,
 	}).Info("Request completed for: ", url)
-	fmt.Printf(string(result.body) + "\n")
+	processResultBody(result.body)
 }
 
 func executeBasicAuthGet(url string, user string, password string) {
@@ -142,7 +144,7 @@ func executeBasicAuthGet(url string, user string, password string) {
 	Logr.WithFields(Logr.Fields{
 		"status": result.status,
 	}).Info("Request completed for: ", url)
-	fmt.Printf(string(result.body) + "\n")
+	processResultBody(result.body)
 }
 
 func executeTokenAuthGet(url string, token string) {
@@ -170,7 +172,7 @@ func executeTokenAuthGet(url string, token string) {
 	Logr.WithFields(Logr.Fields{
 		"status": result.status,
 	}).Info("Request completed for: ", url)
-	fmt.Printf(string(result.body) + "\n")
+	processResultBody(result.body)
 }
 
 func isBasicAuth(auth string) bool {
@@ -220,4 +222,10 @@ func isUnknownAuth(auth string) bool {
 type HTTPResponse struct {
 	status string
 	body   []byte
+}
+
+func processResultBody(body []byte) {
+	// NOTE: want to expand on this, including being able to work with new flag
+	//       --output [console(default)|log|both]
+	fmt.Printf("%s\n", body)
 }
