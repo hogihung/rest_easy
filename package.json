@@ -1,0 +1,32 @@
+{
+  "name": "rest_easy",
+  "version": "1.0.0",
+  "description": "Health Check app written in Go for testing web app endpoints using REST (get) requests",
+  "main": "main.go",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hogihung/rest_easy.git"
+  },
+  "keywords": [
+    "api",
+    "command-line",
+    "command",
+    "go",
+    "logging",
+    "endpoints"
+  ],
+  "author": "hogihung",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hogihung/rest_easy/issues"
+  },
+  "homepage": "https://github.com/hogihung/rest_easy#readme",
+  "devDependencies": {
+    "child_process": "^1.0.2",
+    "jest": "^24.8.0",
+    "js-trim-multiline-string": "^1.0.5"
+  }
+}
